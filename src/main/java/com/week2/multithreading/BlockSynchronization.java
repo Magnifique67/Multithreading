@@ -6,7 +6,11 @@ class Counter {
 
     public void increment() {
         synchronized (this) {
+            System.out.println(Thread.currentThread().getName() + " is incrementing. Current count: " + count);
             count++;
+
+            System.out.println(Thread.currentThread().getName() + " has incremented. New count: " + count);
+
         }
     }
 
@@ -20,7 +24,7 @@ public class BlockSynchronization {
         Counter counter = new Counter();
 
         Runnable task = () -> {
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i <5; i++) {
                 counter.increment();
             }
         };

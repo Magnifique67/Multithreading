@@ -4,7 +4,11 @@ class Method {
     private int count = 0;
 
     public synchronized void increment() {
+
+        System.out.println(Thread.currentThread().getName() + " is incrementing. Current count: " + count);
         count++;
+
+        System.out.println(Thread.currentThread().getName() + " has incremented. New count: " + count);
     }
 
     public int getCount() {
@@ -17,13 +21,13 @@ public class MethodSynchronization {
         Method method = new Method();
 
         Runnable task = () -> {
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 10; i++) {
                 method.increment();
             }
         };
 
-        Thread t1 = new Thread(task);
-        Thread t2 = new Thread(task);
+        Thread t1 = new Thread(task, "Thread-1");
+        Thread t2 = new Thread(task, "Thread-2");
         t1.start();
         t2.start();
 
